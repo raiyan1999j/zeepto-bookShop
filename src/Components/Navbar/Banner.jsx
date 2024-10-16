@@ -39,8 +39,8 @@ export default function Banner(){
     }
     return(
         <>
-            <section className='w-full'>
-            <div className='w-[1200px] mx-auto py-14'>
+            <section className='w-[1200px] mx-auto'>
+            <div className='w-full py-14'>
                 <BannerSlider info={sliderInfo[quoteSelection]} fadeOption={fadeOpt}/>
 
                 <div className='w-full mx-auto'>
