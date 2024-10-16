@@ -1,3 +1,4 @@
+import { Outlet } from "react-router-dom";
 import Navbar from "./Components/Navbar/Navbar";
 
 export default function App(){
@@ -7,7 +8,9 @@ export default function App(){
         <Navbar/>
       </header>
 
-      <main></main>
+      <main>
+        <Outlet/>
+      </main>
 
       <footer></footer>
     </>
