@@ -9,8 +9,7 @@ export default {
       fontFamily:{
         "anton":["Anton", 'sans-serif'],
         "rajdhani":["Rajdhani", 'sans-serif']
-        
-      }
+      },
     },
   },
   plugins: [],
