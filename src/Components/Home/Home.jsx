@@ -20,7 +20,7 @@ export default function Home(){
         <section className="w-[1200px] mx-auto mt-10">
             <SearchFilter/>
             
-            <div className="w-full grid grid-cols-3 gap-x-20 gap-y-8 mt-[50px]">
+            <div className="w-full grid grid-cols-3 gap-x-20 gap-y-8 mt-[50px] items-start">
             {
                 isPending?
                 <p>Waiting..</p>:
