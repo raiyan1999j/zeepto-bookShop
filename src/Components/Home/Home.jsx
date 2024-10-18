@@ -36,7 +36,7 @@ export default function Home(){
     return(
         <>  
         <section className="w-[1200px] mx-auto my-10">
-            <SearchFilter/>
+            <SearchFilter allInfo={data}/>
             
             <div className="w-full grid grid-cols-3 gap-x-20 gap-y-8 mt-[50px] items-start">
             {
