@@ -1,8 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-export default function SearchFilter({allInfo}){
+export default function SearchFilter({allInfo,inputFilter}){
     const [filterData,setFilterData] = useState();
+    let filterRef = useRef(null);
     
+    const filterInput=(event)=>{
+        filterRef.current = event.target.value;
+
+        inputFilter(filterRef.current);
+    }
     useEffect(()=>{
         async function filterableData(){
             const step1 = await allInfo?.map(items=>items.bookshelves);
@@ -35,9 +41,12 @@ export default function SearchFilter({allInfo}){
                     </div>
                     <div className="w-[30%]">
                         <div>
-                            <select className="border border-gray-500/50 border-t-0 border-r-0 border-l-0 text-base text-slate-900 font-rajdhani capitalize pl-4">
+                            <select className="border border-gray-500/50 border-t-0 border-r-0 border-l-0 text-base text-slate-900 font-rajdhani capitalize pl-4" defaultValue={filterRef} ref={filterRef} onChange={(event)=>{filterInput(event)}}>
                             <option value="select your topic" disabled>
                                 Select your topic
+                            </option>
+                            <option onClick={()=>{inputFilter(null)}}>
+                                Clear filter
                             </option>
                                 {
                                     filterData?.map((items,index)=>{
