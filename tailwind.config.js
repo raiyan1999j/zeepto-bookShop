@@ -10,6 +10,10 @@ export default {
         "anton":["Anton", 'sans-serif'],
         "rajdhani":["Rajdhani", 'sans-serif']
       },
+      animation:{
+        'spin-1':'spin 3s linear infinite',
+        'spin-2':'spin 3s linear infinite alternate forwards'
+      }
     },
   },
   plugins: [],

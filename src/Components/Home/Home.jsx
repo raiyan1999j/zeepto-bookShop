@@ -3,6 +3,7 @@ import { useEffect, useState } from "react"
 import SearchFilter from "./SearchFilter";
 import BookContainer from "./BookContainer";
 import Pagination from "./Pagination";
+import Loader from "../Loader/Loader";
 
 export default function Home(){
     const [dataContainer,setDataContainer] = useState([]);
@@ -69,18 +70,21 @@ export default function Home(){
             inputFilter={(value)=>{filterInput(value)}}
             searchFilter={(value)=>{searchInput(value)}} 
             allInfo={data}/>
-            
-            <div className="w-full grid grid-cols-3 gap-x-20 gap-y-8 mt-[50px] items-start">
             {
                 isPending?
-                <p>Waiting..</p>:
+                <div className="flex justify-center items-center h-full w-full mt-[80px]">
+                    <Loader/>
+                </div>:
                 isError?
                 <p>Something went wrong please try agin latter</p>:
-                dataContainer?.map((items,index)=>{
-                    return <BookContainer key={index} info={items}/>
-                })
+                <div className="w-full grid grid-cols-3 gap-x-20 gap-y-8 mt-[50px] items-start">
+                    {
+                        dataContainer?.map((items,index)=>{
+                            return <BookContainer key={index} info={items}/>
+                        })
+                    }
+                </div>
             }
-            </div>
 
             <Pagination 
             pageSelected={(value)=>{selectedPage(value)}}
