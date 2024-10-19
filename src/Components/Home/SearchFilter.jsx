@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from "react";
 
-export default function SearchFilter({allInfo,inputFilter}){
+export default function SearchFilter({allInfo,inputFilter,searchFilter}){
     const [filterData,setFilterData] = useState();
-    let filterRef = useRef(null);
+    const filterRef = useRef(null);
+    const searchRef = useRef(null);
+    
     
     const filterInput=(event)=>{
         filterRef.current = event.target.value;
 
         inputFilter(filterRef.current);
+    }
+
+    const searchInput=(event)=>{
+        searchFilter(event.current.value)
     }
     useEffect(()=>{
         async function filterableData(){
@@ -36,7 +42,10 @@ export default function SearchFilter({allInfo,inputFilter}){
                 <div className="w-full flex flex-row justify-between">
                     <div className="w-[30%]">
                     <div className="h-full w-full">
-                                <input type="text" className="h-full w-full bg-transparent border border-gray-500/50 rounded-sm border-t-0 border-r-0 border-l-0 pl-4 text-base font-rajdhani text-slate-900 placeholder:capitalize placeholder:font-rajdhani" placeholder="search by title"/>
+                                <input type="text" className="h-full w-full bg-transparent border border-gray-500/50 rounded-sm border-t-0 border-r-0 border-l-0 pl-4 text-base font-rajdhani text-slate-900 placeholder:capitalize placeholder:font-rajdhani" placeholder="search by title"
+                                ref={searchRef}
+                                onChange={()=>{searchInput(searchRef)}}
+                                />
                             </div>
                     </div>
                     <div className="w-[30%]">

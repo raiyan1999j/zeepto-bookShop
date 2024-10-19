@@ -19,6 +19,7 @@ export default function Home(){
             return step2.results;
         }
     })
+
     const selectedPage=(currentPage)=>{
         setPageSelection(currentPage);
     }
@@ -41,6 +42,14 @@ export default function Home(){
         setFilterContainData(step1);
         setPageSelection(1)
     }
+
+    const searchInput=(value)=>{
+        const step1 = data.filter((items)=>{
+            return items.title.toLowerCase().includes(value.toLowerCase())
+        })
+
+        setFilterContainData(step1);
+    }
     useEffect(()=>{
         const arrayLen = filterContainData?.length === 0?data?.length:filterContainData?.length;
         const perPageData = 6;
@@ -57,7 +66,8 @@ export default function Home(){
         <>  
         <section className="w-[1200px] mx-auto my-10">
             <SearchFilter
-            inputFilter={(value)=>{filterInput(value)}} 
+            inputFilter={(value)=>{filterInput(value)}}
+            searchFilter={(value)=>{searchInput(value)}} 
             allInfo={data}/>
             
             <div className="w-full grid grid-cols-3 gap-x-20 gap-y-8 mt-[50px] items-start">
