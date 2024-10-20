@@ -20,15 +20,16 @@ export default function Details() {
     },
   });
 
+
   return (
     <>
-      <section className="w-[1200px] mx-auto my-[50px]">
+      <section className="w-[1200px] mx-auto my-[50px] small:w-full">
         {bookPending ? (
           <div className="w-full h-screen flex justify-center items-center">
             <Loader />
           </div>
         ) : (
-          <div className="w-full grid grid-rows-2 gap-y-5">
+          <div className="w-full grid grid-rows-2 gap-y-5 small:grid-cols-1 small:grid-rows-none">
             <div className="w-full flex justify-center items-center">
               <div className="h-[250px] w-[250px]">
                 <img
@@ -40,7 +41,7 @@ export default function Details() {
             </div>
 
             <div className="w-full">
-              <div className="w-[50%] mx-auto text-center">
+              <div className="w-[50%] mx-auto text-center small:w-[80%]">
                 <h2 className="capitalize text-2xl font-anton text-black font-medium leading-normal">
                   {bookData.title}
                 </h2>
@@ -53,7 +54,7 @@ export default function Details() {
                 </h4>
               </div>
 
-              <div className="grid grid-cols-2 gap-x-24 w-[80%] mx-auto mt-4 border border-t-0 border-r-0 border-l-0 border-gray-400/30 rounded-xl py-4">
+              <div className="grid grid-cols-2 gap-x-24 w-[80%] mx-auto mt-4 border border-t-0 border-r-0 border-l-0 border-gray-400/30 rounded-xl py-4 small:grid-cols-1">
                 <div>
                   <h3 className="text-base font-anton text-black/80 capitalize">
                     feature of the books:
@@ -77,7 +78,7 @@ export default function Details() {
                   <h3 className="text-base font-anton text-black/80 capitalize">
                     topics relatable of this book:
                   </h3>
-                  <ul className="list-disc ml-[50px] text-sm  text-slate-800 font-rajdhani font-medium leading-normal capitalize mt-4">
+                  <ul className="list-disc ml-[50px] text-sm  text-slate-800 font-rajdhani font-medium leading-normal capitalize mt-4 small:ml-[10px]">
                     {bookData.subjects.map((items, index) => {
                       return (
                         <li key={index} className="mb-1">
@@ -100,7 +101,7 @@ export default function Details() {
               </div>
 
               <div className="w-[80%] mx-auto flex flex-row">
-                <div>
+                <div className="flex flex-row gap-x-3">
                   <button className="py-2 px-4 rounded-lg border border-black text-base capitalize font-rajdhani transition-all duration-100 ease-in hover:shadow-inner hover:shadow-slate-900 hover:bg-slate-400 hover:text-white active:scale-[0.80] mr-2" onClick={()=>{navigate(-1)}}>
                     Go back
                   </button>

@@ -72,7 +72,7 @@ export default function Home(){
     return(
         <>
         <ToastContainer infoContainer={toastInfo}/>  
-        <section className="w-[1200px] mx-auto my-10">
+        <section className="w-[1200px] mx-auto my-10 small:w-full">
             <Banner/>
             <SearchFilter
             inputFilter={(value)=>{filterInput(value)}}
@@ -85,7 +85,7 @@ export default function Home(){
                 </div>:
                 isError?
                 <p>Something went wrong please try agin latter</p>:
-                <div className="w-full grid grid-cols-3 gap-x-20 gap-y-8 mt-[50px] items-start">
+                <div className="w-full grid grid-cols-3 gap-x-20 gap-y-8 mt-[50px] items-start small:grid-cols-1">
                     {
                         dataContainer?.map((items,index)=>{
                             return <BookContainer 
