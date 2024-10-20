@@ -5,6 +5,7 @@ import BookContainer from "./BookContainer";
 import Pagination from "./Pagination";
 import Loader from "../Loader/Loader";
 import ToastContainer from "../ToastContainer/ToastContainer";
+import Banner from "./Banner";
 
 export default function Home(){
     const [dataContainer,setDataContainer] = useState([]);
@@ -72,6 +73,7 @@ export default function Home(){
         <>
         <ToastContainer infoContainer={toastInfo}/>  
         <section className="w-[1200px] mx-auto my-10">
+            <Banner/>
             <SearchFilter
             inputFilter={(value)=>{filterInput(value)}}
             searchFilter={(value)=>{searchInput(value)}} 

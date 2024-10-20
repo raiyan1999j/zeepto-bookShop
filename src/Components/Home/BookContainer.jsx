@@ -1,11 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
 
 export default function BookContainer({info,messageToast}){
     const {authors,title,id,subjects,formats} = info;
     const queryClient = useQueryClient();
     const [wishlistTrack,setWishlistTrack] = useState(0);
+    const navigate = useNavigate();
 
     const {isPending,isError,data} = useQuery({
         queryKey:["localData"],
@@ -15,6 +17,8 @@ export default function BookContainer({info,messageToast}){
 
             return step2;
         },
+        refetchInterval: 10000,
+        staleTime : 1000 * 10
     })
 
     const insertData = useMutation({
@@ -114,7 +118,7 @@ export default function BookContainer({info,messageToast}){
                     </div>
 
                     <div className="flex flex-row justify-between mt-4">
-                        <button className="h-[40px] w-1/4 bg-slate-800 rounded-xl relative group capitalize font-rajdhani text-base">
+                        <button className="h-[40px] w-1/4 bg-slate-800 rounded-xl relative group capitalize font-rajdhani text-base" onMouseUp={()=>{navigate('/details',{state:id})}}>
                             <span className="absolute top-[0%] left-[0%] bg-white h-[100%] w-[100%] rounded-xl flex justify-center items-center border-[2px] border-slate-800 transition-all duration-100 ease-in translate-y-[-15%] group-hover:translate-y-[-20%] group-active:translate-y-0">
                                 details
                             </span>
