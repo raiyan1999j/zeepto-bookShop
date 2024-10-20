@@ -4,13 +4,14 @@ import SearchFilter from "./SearchFilter";
 import BookContainer from "./BookContainer";
 import Pagination from "./Pagination";
 import Loader from "../Loader/Loader";
+import ToastContainer from "../ToastContainer/ToastContainer";
 
 export default function Home(){
     const [dataContainer,setDataContainer] = useState([]);
     const [filterContainData,setFilterContainData] = useState([]);
-    const [topicBase,setTopicBase] = useState("");
     const [totalPage,setTotalPage] = useState();
     const [pageSelection,setPageSelection] = useState(1);
+    const [toastInfo,setToastInfo] = useState();
     const {isPending,isError,data} = useQuery({
         queryKey:["bookData"],
         queryFn:async ()=>{
@@ -51,6 +52,10 @@ export default function Home(){
 
         setFilterContainData(step1);
     }
+
+    const toastMessage=(value)=>{
+        setToastInfo(value)
+    }
     useEffect(()=>{
         const arrayLen = filterContainData?.length === 0?data?.length:filterContainData?.length;
         const perPageData = 6;
@@ -64,7 +69,8 @@ export default function Home(){
         setTotalPage(totalPageNumber)
     },[data,pageSelection,filterContainData])
     return(
-        <>  
+        <>
+        <ToastContainer infoContainer={toastInfo}/>  
         <section className="w-[1200px] mx-auto my-10">
             <SearchFilter
             inputFilter={(value)=>{filterInput(value)}}
@@ -80,7 +86,11 @@ export default function Home(){
                 <div className="w-full grid grid-cols-3 gap-x-20 gap-y-8 mt-[50px] items-start">
                     {
                         dataContainer?.map((items,index)=>{
-                            return <BookContainer key={index} info={items}/>
+                            return <BookContainer 
+                            key={index} 
+                            info={items}
+                            messageToast={(value)=>{toastMessage(value)}}
+                            />
                         })
                     }
                 </div>

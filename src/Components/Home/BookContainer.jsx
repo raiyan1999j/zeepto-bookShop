@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 
-export default function BookContainer({info}){
+export default function BookContainer({info,messageToast}){
     const {authors,title,id,subjects,formats} = info;
     const queryClient = useQueryClient();
     const [wishlistTrack,setWishlistTrack] = useState(0);
@@ -56,8 +56,10 @@ export default function BookContainer({info}){
     const wishlistConfig=(value)=>{
         if (value.condition == "add"){
             insertData.mutate(value.id)
+            messageToast({condition:"added",title})
         }else{
             removeData.mutate(value.id);
+            messageToast({condition:"remove",title})
         }
 
         setWishlistTrack(0)
@@ -70,8 +72,6 @@ export default function BookContainer({info}){
             }
         })
     },[data])
-
-    console.log(data)
     return(
         <>
             <div className="border border-gray-400/50 rounded-lg p-2">
@@ -121,8 +121,8 @@ export default function BookContainer({info}){
                         </button>
                         <button className={`h-6 w-[50px]  rounded-full flex items-center justify-center px-3 overflow-hidden transition-all duration-100 ease-in hover:w-[150px] hover:justify-between group active:scale-50 ${wishlistTrack == id?"bg-white border border-black hover:w-[180px]":"bg-rose-500"}`} onMouseUp={()=>{
                             wishlistConfig({condition:`${wishlistTrack == id?"remove":"add"}`,id})}}>
-                            <FaHeart className={`${wishlistTrack?"text-black":"text-white"}`}/>
-                            <span className={`hidden font-medium capitalize text-sm font-rajdhani text-white group-hover:block ${wishlistTrack == id?"text-black":"text-white"}`}>
+                            <FaHeart className={`${wishlistTrack == id?"text-black":"text-white"}`}/>
+                            <span className={`hidden font-medium capitalize text-sm font-rajdhani group-hover:block ${wishlistTrack == id?"text-black":"text-white"}`}>
                                 {
                                     wishlistTrack == id?"remove from wish list":"add to whish list"
                                 }
