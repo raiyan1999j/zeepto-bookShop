@@ -6,6 +6,7 @@ import {createBrowserRouter,Router,RouterProvider} from 'react-router-dom';
 import Home from './Components/Home/Home.jsx';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Details from './Components/Details/Details.jsx';
+import Wishlist from './Components/Wishtlist/Wishlist.jsx';
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path:'/details',
         element:<Details/>
+      },
+      {
+        path:'/wishlist',
+        element:<Wishlist/>
       }
     ]
   }

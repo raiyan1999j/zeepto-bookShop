@@ -20,7 +20,9 @@ export default function NavigationBar(){
                                     <NavLink to="/home">home</NavLink>
                                 </li>
                                 <li className="hover:cursor-pointer">
+                                    <NavLink to="/wishlist">
                                     WishList
+                                    </NavLink>
                                 </li>
                             </ul>
                         </div>
