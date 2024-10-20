@@ -1,7 +1,77 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { FaHeart } from "react-icons/fa";
 
 export default function BookContainer({info}){
     const {authors,title,id,subjects,formats} = info;
+    const queryClient = useQueryClient();
+    const [wishlistTrack,setWishlistTrack] = useState(0);
+
+    const {isPending,isError,data} = useQuery({
+        queryKey:["localData"],
+        queryFn:()=>{
+            const step1 = localStorage.getItem("wishlist");
+            const step2 = JSON.parse(step1);
+
+            return step2;
+        },
+    })
+
+    const insertData = useMutation({
+        mutationFn:(value)=>{
+        const wrap = [
+            {id:value}
+        ]
+        const convert = JSON.stringify(wrap);
+
+        if(localStorage.getItem("wishlist")){
+            const fetchData = localStorage.getItem("wishlist");
+            const reConvert = JSON.parse(fetchData);
+            const updateArr = wrap.concat(reConvert);
+            const uploadArr = JSON.stringify(updateArr);
+
+            localStorage.setItem("wishlist",uploadArr)
+        }else{
+            localStorage.setItem("wishlist",convert)
+        }
+        },
+        onSuccess:()=>{
+            queryClient.invalidateQueries({queryKey:["localData"]})
+        }
+    })
+
+    const removeData = useMutation({
+        mutationFn:(value)=>{
+            const step1 = localStorage.getItem("wishlist");
+            const step2 = JSON.parse(step1);
+            const step3 = step2.filter(items=>items.id != value);
+            const step4 = JSON.stringify(step3);
+
+            return localStorage.setItem("wishlist",step4)
+        },
+        onSuccess:()=>{
+            queryClient.invalidateQueries({queryKey:["localData"]})
+        }
+    })
+    const wishlistConfig=(value)=>{
+        if (value.condition == "add"){
+            insertData.mutate(value.id)
+        }else{
+            removeData.mutate(value.id);
+        }
+
+        setWishlistTrack(0)
+    }
+
+    useEffect(()=>{
+        data?.map((items)=>{
+            if(items.id == id){
+                setWishlistTrack(items.id)
+            }
+        })
+    },[data])
+
+    console.log(data)
     return(
         <>
             <div className="border border-gray-400/50 rounded-lg p-2">
@@ -49,10 +119,13 @@ export default function BookContainer({info}){
                                 details
                             </span>
                         </button>
-                        <button className="h-6 w-[50px] bg-rose-500 rounded-full flex items-center justify-center px-3 overflow-hidden transition-all duration-100 ease-in hover:w-[150px] hover:justify-between group active:scale-50">
-                            <FaHeart className="text-white"/>
-                            <span className="hidden font-medium capitalize text-sm font-rajdhani text-white group-hover:block">
-                                add to whish list
+                        <button className={`h-6 w-[50px]  rounded-full flex items-center justify-center px-3 overflow-hidden transition-all duration-100 ease-in hover:w-[150px] hover:justify-between group active:scale-50 ${wishlistTrack == id?"bg-white border border-black hover:w-[180px]":"bg-rose-500"}`} onMouseUp={()=>{
+                            wishlistConfig({condition:`${wishlistTrack == id?"remove":"add"}`,id})}}>
+                            <FaHeart className={`${wishlistTrack?"text-black":"text-white"}`}/>
+                            <span className={`hidden font-medium capitalize text-sm font-rajdhani text-white group-hover:block ${wishlistTrack == id?"text-black":"text-white"}`}>
+                                {
+                                    wishlistTrack == id?"remove from wish list":"add to whish list"
+                                }
                             </span>
                         </button>
                     </div>
